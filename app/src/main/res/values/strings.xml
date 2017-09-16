@@ -2,5 +2,6 @@
   <string name="app_name">tamboon</string>
   <string name="amount">Amount to Donate</string>
   <string name="donate_text">Donate</string>
+  <string name="close">Close</string>
   <string name="wait">Please Wait while transferring</string>
 </resources>

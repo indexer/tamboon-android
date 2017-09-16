@@ -14,6 +14,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.omise.android.models.Token;
 import co.omise.android.ui.CreditCardActivity;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.google.gson.JsonObject;
 import com.indexer.tamboon.R;
 import com.indexer.tamboon.model.Charity;
@@ -31,6 +35,8 @@ public class DonateActivity extends AppCompatActivity {
   @BindView(R.id.inputPanel) ConstraintLayout constraintLayout;
   @BindView(R.id.progressPanel) ConstraintLayout progressLayout;
   @BindView(R.id.mProgressBar) ProgressBar mProgress;
+  MaterialStyledDialog materialStyledDialog;
+  boolean isActivityResumed = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,12 @@ public class DonateActivity extends AppCompatActivity {
     setContentView(R.layout.activity_donate);
     ButterKnife.bind(this);
     Charity mCharity = getIntent().getParcelableExtra("item");
+    materialStyledDialog = new MaterialStyledDialog.Builder(this)
+        .setTitle("Congratulation!")
+        .setStyle(Style.HEADER_WITH_TITLE)
+        .setDescription("Thank you For your donations to" + mCharity.getName())
+        .setPositiveText(R.string.close)
+        .onPositive((dialog, which) -> this.finish()).build();
   }
 
   @OnClick(R.id.donate_button) void requestTokenAndDonate() {
@@ -48,6 +60,22 @@ public class DonateActivity extends AppCompatActivity {
     Intent intent = new Intent(this, CreditCardActivity.class);
     intent.putExtra(CreditCardActivity.EXTRA_PKEY, OMISE_PKEY);
     startActivityForResult(intent, REQUEST_CC);
+  }
+
+  @Override
+  protected void onResume() {
+    // TODO Auto-generated method stub
+    // When activity is in focus, it will be on resumed.
+    super.onResume();
+    isActivityResumed = true;
+  }
+
+  @Override
+  protected void onPause() {
+    // TODO Auto-generated method stub
+    // When activity is out of focus, it will be on paused.
+    super.onPause();
+    isActivityResumed = false;
   }
 
   @Override
@@ -72,12 +100,14 @@ public class DonateActivity extends AppCompatActivity {
           @Override public void onResponse(@NonNull Call<JsonObject> call,
               @NonNull Response<JsonObject> response) {
             // Log.e("Response", "==" + response.message());
-            mProgress.setVisibility(View.GONE);
+            progressLayout.setVisibility(View.GONE);
             constraintLayout.setVisibility(View.VISIBLE);
+            if (isActivityResumed && materialStyledDialog != null) {
+              materialStyledDialog.show();
+            }
           }
 
           @Override public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-
           }
         });
 

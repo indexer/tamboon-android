@@ -1,29 +1,18 @@
 package com.indexer.tamboon.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import co.omise.android.models.Token;
-import co.omise.android.ui.CreditCardActivity;
-import com.google.gson.JsonObject;
 import com.indexer.tamboon.R;
 import com.indexer.tamboon.adapter.ListAdapter;
 import com.indexer.tamboon.adapter.SpacesItemDecoration;
-import com.indexer.tamboon.model.DonateRequest;
-import com.indexer.tamboon.rest.RestClient;
 import com.indexer.tamboon.viewmodel.CharitiesListViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     SpacesItemDecoration dividerItemDecoration =
         new SpacesItemDecoration(16);
     mRecyclerView.addItemDecoration(dividerItemDecoration);
-
     //  showCreditCardForm();
   }
 
