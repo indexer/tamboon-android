@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.rest.RestClient;
 import java.util.List;
@@ -31,14 +33,14 @@ public class CharitiesListViewModel extends AndroidViewModel {
             .getCharities();
     productReturnObjectCall.enqueue(new Callback<List<Charity>>() {
 
-      @Override public void onResponse(Call<List<Charity>> call,
-          Response<List<Charity>> response) {
+      @Override public void onResponse(@NonNull Call<List<Charity>> call,
+          @NonNull Response<List<Charity>> response) {
         if (response.isSuccessful()) {
           mCharitiestList.setValue(response.body());
         }
       }
 
-      @Override public void onFailure(Call<List<Charity>> call, Throwable t) {
+      @Override public void onFailure(@NonNull Call<List<Charity>> call, @NonNull Throwable t) {
 
       }
     });

@@ -7,10 +7,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.omise.android.models.Token;
 import co.omise.android.ui.CreditCardActivity;
 import com.google.gson.JsonObject;
+import com.indexer.tamboon.adapter.ListAdapter;
+import com.indexer.tamboon.adapter.SpacesItemDecoration;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.model.DonateRequest;
 import com.indexer.tamboon.rest.RestClient;
@@ -24,15 +30,27 @@ public class MainActivity extends AppCompatActivity {
   private static final String OMISE_PKEY = "pkey_test_59b6c90mlib17w06kaf";
   private static final int REQUEST_CC = 100;
   CharitiesListViewModel viewModel;
+  @BindView(R.id.charities_list) RecyclerView mRecyclerView;
+  ListAdapter mListAdapter;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
+    mListAdapter = new ListAdapter();
     viewModel = ViewModelProviders.of(this).get(CharitiesListViewModel.class);
     viewModel.getCharitiest().observe(this, mCharitiesList -> {
-      Log.e("mlist", "" + mCharitiesList.size());
+      mListAdapter.setItems(mCharitiesList);
     });
+
+    mRecyclerView.setAdapter(mListAdapter);
+    mRecyclerView.setHasFixedSize(true);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+        LinearLayoutManager.VERTICAL, false));
+    SpacesItemDecoration dividerItemDecoration =
+        new SpacesItemDecoration(16);
+    mRecyclerView.addItemDecoration(dividerItemDecoration);
 
     //  showCreditCardForm();
   }
