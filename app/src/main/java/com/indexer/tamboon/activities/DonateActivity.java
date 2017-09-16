@@ -1,58 +1,47 @@
-package com.indexer.tamboon;
+package com.indexer.tamboon.activities;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.omise.android.models.Token;
 import co.omise.android.ui.CreditCardActivity;
 import com.google.gson.JsonObject;
-import com.indexer.tamboon.adapter.ListAdapter;
-import com.indexer.tamboon.adapter.SpacesItemDecoration;
+import com.indexer.tamboon.R;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.model.DonateRequest;
 import com.indexer.tamboon.rest.RestClient;
-import com.indexer.tamboon.viewmodel.CharitiesListViewModel;
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class DonateActivity extends AppCompatActivity {
+
   private static final String OMISE_PKEY = "pkey_test_59b6c90mlib17w06kaf";
   private static final int REQUEST_CC = 100;
-  CharitiesListViewModel viewModel;
-  @BindView(R.id.charities_list) RecyclerView mRecyclerView;
-  ListAdapter mListAdapter;
+  @BindView(R.id.amount) TextInputEditText mInputText;
+  @BindView(R.id.inputPanel) ConstraintLayout constraintLayout;
+  @BindView(R.id.progressPanel) ConstraintLayout progressLayout;
+  @BindView(R.id.mProgressBar) ProgressBar mProgress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_donate);
     ButterKnife.bind(this);
-    mListAdapter = new ListAdapter();
-    viewModel = ViewModelProviders.of(this).get(CharitiesListViewModel.class);
-    viewModel.getCharitiest().observe(this, mCharitiesList -> {
-      mListAdapter.setItems(mCharitiesList);
-    });
+    Charity mCharity = getIntent().getParcelableExtra("item");
+  }
 
-    mRecyclerView.setAdapter(mListAdapter);
-    mRecyclerView.setHasFixedSize(true);
-    mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
-        LinearLayoutManager.VERTICAL, false));
-    SpacesItemDecoration dividerItemDecoration =
-        new SpacesItemDecoration(16);
-    mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-    //  showCreditCardForm();
+  @OnClick(R.id.donate_button) void requestTokenAndDonate() {
+    showCreditCardForm();
   }
 
   private void showCreditCardForm() {
@@ -73,16 +62,21 @@ public class MainActivity extends AppCompatActivity {
         // process your token here.
         DonateRequest mDonateRequest = new DonateRequest();
         mDonateRequest.setToken(token.id);
-        mDonateRequest.setAmount(10000);
+        mDonateRequest.setAmount(Integer.parseInt(mInputText.getText().toString()));
         mDonateRequest.setName(token.card.name);
+        constraintLayout.setVisibility(View.GONE);
+        progressLayout.setVisibility(View.VISIBLE);
 
         Call<JsonObject> donateCash = RestClient.getService(this).donateToCharities(mDonateRequest);
         donateCash.enqueue(new Callback<JsonObject>() {
-          @Override public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-            Log.e("Response", "==" + response.message());
+          @Override public void onResponse(@NonNull Call<JsonObject> call,
+              @NonNull Response<JsonObject> response) {
+            // Log.e("Response", "==" + response.message());
+            mProgress.setVisibility(View.GONE);
+            constraintLayout.setVisibility(View.VISIBLE);
           }
 
-          @Override public void onFailure(Call<JsonObject> call, Throwable t) {
+          @Override public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
 
           }
         });

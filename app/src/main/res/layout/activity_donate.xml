@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.indexer.tamboon.activities.DonateActivity">
+  <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+      android:visibility="visible"
+      android:layout_height="match_parent"
+      android:id="@+id/inputPanel">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+      <android.support.design.widget.TextInputEditText
+          android:id="@+id/amount"
+          android:layout_margin="8dp"
+          android:inputType="number"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="@string/amount"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/donate_button"
+        android:textColor="@android:color/white"
+        android:layout_margin="8dp"
+        android:text="@string/donate_text"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout"/>
+  </android.support.constraint.ConstraintLayout>
+  <android.support.constraint.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      android:id="@+id/progressPanel">
+    <ProgressBar
+        android:id="@+id/mProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
+        android:gravity="center_horizontal"
+        android:padding="8dp"
+        android:text="@string/wait"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mProgressBar"/>
+  </android.support.constraint.ConstraintLayout>
+
+
+</RelativeLayout>

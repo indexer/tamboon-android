@@ -18,8 +18,10 @@ public class CharitiesListViewModel extends AndroidViewModel {
   private MutableLiveData<List<Charity>> mCharitiestList;
 
   public LiveData<List<Charity>> getCharitiest() {
-    mCharitiestList = new MutableLiveData<>();
-    fetchData();
+    if (mCharitiestList == null) {
+      mCharitiestList = new MutableLiveData<>();
+      fetchData();
+    }
     return mCharitiestList;
   }
 

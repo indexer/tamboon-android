@@ -6,7 +6,7 @@ import android.view.View;
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder
     implements View.OnClickListener {
 
-  protected final OnItemClickListener listener;
+  private final OnItemClickListener listener;
 
   public BaseViewHolder(View itemView, OnItemClickListener listener) {
     super(itemView);
