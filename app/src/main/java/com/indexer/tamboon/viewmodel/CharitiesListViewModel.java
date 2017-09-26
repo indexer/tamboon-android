@@ -5,9 +5,9 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.rest.RestClient;
-import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,11 +38,13 @@ public class CharitiesListViewModel extends AndroidViewModel {
           @NonNull Response<List<Charity>> response) {
         if (response.isSuccessful()) {
           mCharitiesList.setValue(response.body());
+        } else {
+          mCharitiesList.setValue(null);
         }
       }
 
       @Override public void onFailure(@NonNull Call<List<Charity>> call, @NonNull Throwable t) {
-
+        mCharitiesList.setValue(null);
       }
     });
   }

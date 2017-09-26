@@ -17,7 +17,7 @@ public class RestClient {
     String localHostUrl = "http://192.168.43.144:8080";//for test in localhost
     OkHttpClient.Builder builder = new OkHttpClient.Builder();
     builder.addInterceptor(
-        new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE));
+        new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
     builder.connectTimeout(30, TimeUnit.SECONDS);
     builder.writeTimeout(10, TimeUnit.SECONDS);
     builder.readTimeout(30, TimeUnit.SECONDS);
