@@ -17,7 +17,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     buildTypes.each {
-      it.buildConfigField 'String', 'OMISE_PKEY', "$System.env.OMISE_PKEY"
+      it.buildConfigField 'String', 'OMISE_PKEY', omise_pkey
     }
   }
   compileOptions {
@@ -25,6 +25,8 @@ android {
     sourceCompatibility 1.8
   }
 }
+
+
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])

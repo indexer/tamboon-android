@@ -1,12 +1,11 @@
 package com.indexer.tamboon.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import butterknife.BindView;
@@ -14,8 +13,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.omise.android.models.Token;
 import co.omise.android.ui.CreditCardActivity;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.google.gson.JsonObject;
