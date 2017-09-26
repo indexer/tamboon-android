@@ -16,6 +16,9 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+    buildTypes.each {
+      it.buildConfigField 'String', 'OMISE_PKEY', "$System.env.OMISE_PKEY"
+    }
   }
   compileOptions {
     targetCompatibility 1.8

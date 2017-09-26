@@ -5,9 +5,9 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.rest.RestClient;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,14 +15,16 @@ import retrofit2.Response;
 
 public class CharitiesListViewModel extends AndroidViewModel {
 
-  private MutableLiveData<List<Charity>> mCharitiestList;
+  private MutableLiveData<List<Charity>> mCharitiesList;
+  private List<Charity> mListCharities = new ArrayList<>();
 
-  public LiveData<List<Charity>> getCharitiest() {
-    if (mCharitiestList == null) {
-      mCharitiestList = new MutableLiveData<>();
+  public LiveData<List<Charity>> getCharities() {
+    if (mCharitiesList == null) {
+      mCharitiesList = new MutableLiveData<>();
       fetchData();
+      mCharitiesList.postValue(mListCharities);
     }
-    return mCharitiestList;
+    return mCharitiesList;
   }
 
   public CharitiesListViewModel(Application application) {
@@ -38,7 +40,7 @@ public class CharitiesListViewModel extends AndroidViewModel {
       @Override public void onResponse(@NonNull Call<List<Charity>> call,
           @NonNull Response<List<Charity>> response) {
         if (response.isSuccessful()) {
-          mCharitiestList.setValue(response.body());
+          mListCharities = response.body();
         }
       }
 

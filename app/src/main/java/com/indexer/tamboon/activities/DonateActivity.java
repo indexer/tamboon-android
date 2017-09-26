@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.google.gson.JsonObject;
+import com.indexer.tamboon.BuildConfig;
 import com.indexer.tamboon.R;
 import com.indexer.tamboon.model.Charity;
 import com.indexer.tamboon.model.DonateRequest;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 
 public class DonateActivity extends AppCompatActivity {
 
-  private static final String OMISE_PKEY = "pkey_test_59b6c90mlib17w06kaf";
+  private static final String OMISE_PKEY = BuildConfig.OMISE_PKEY;
   private static final int REQUEST_CC = 100;
   @BindView(R.id.amount) TextInputEditText mInputText;
   @BindView(R.id.inputPanel) ConstraintLayout constraintLayout;
@@ -47,7 +48,7 @@ public class DonateActivity extends AppCompatActivity {
     materialStyledDialog = new MaterialStyledDialog.Builder(this)
         .setTitle("Congratulation!")
         .setStyle(Style.HEADER_WITH_TITLE)
-        .setDescription("Thank you For your donations to" + mCharity.getName())
+        .setDescription("Thank you For your donations to " + mCharity.getName())
         .setPositiveText(R.string.close)
         .onPositive((dialog, which) -> this.finish()).build();
   }

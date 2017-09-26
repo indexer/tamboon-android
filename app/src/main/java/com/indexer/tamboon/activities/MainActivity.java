@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     mListAdapter = new ListAdapter();
     mProgress.setVisibility(View.VISIBLE);
     viewModel = ViewModelProviders.of(this).get(CharitiesListViewModel.class);
-    viewModel.getCharitiest()
+    viewModel.getCharities()
         .observe(this, mCharitiesList -> {
               if (mCharitiesList != null) {
                 mProgress.setVisibility(View.GONE);
